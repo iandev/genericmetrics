@@ -24,7 +24,7 @@ go generate
 
 creates a new function in metrics/funcs.go
 ```go
-// Inc calls the prometheus Inc function using BarBazBing for tags
+// Inc calls the prometheus Inc function using FooMetric for tags
 func (m FooMetric) Inc() {
 	labels := []string{
 		"Tag1",
