@@ -1,10 +1,10 @@
 package metrics
 
 type MetricTypes struct {
-	One   BarBazBing
-	Two   Baz
-	Three BazBar
-	Four  BarBing
+	BarBazBing BarBazBing
+	Baz        Baz
+	BazBar     BazBar
+	BarBing    BarBing
 }
 
 type BarBazBing struct {

@@ -14,30 +14,26 @@ func main() {
 		Baz:  "dsasd",
 		Bing: "dsasd",
 	}
-	BarBazBingCounter := metrics.BarBazBingCounter(BarBazBing)
-	BarBazBingCounter.Inc()
-	fmt.Printf("foo %v\n", BarBazBingCounter.Desc().String())
+	BarBazBing.Inc()
+	fmt.Printf("BarBazBing: %s\n", BarBazBing.Desc().String())
 
 	Baz := metrics.Baz{
 		Baz: "dsasd",
 	}
-	BazCounter := metrics.BazCounter(Baz)
-	BazCounter.Inc()
-	fmt.Printf("foo %v\n", BazCounter.Desc().String())
+	Baz.Inc()
+	fmt.Printf("Baz: %s\n", Baz.Desc().String())
 
 	BazBar := metrics.BazBar{
 		Baz: "dsasd",
 		Bar: "jbjb",
 	}
-	BazBarCounter := metrics.BazBarCounter(BazBar)
-	BazBarCounter.Inc()
-	fmt.Printf("foo %v\n", BazBarCounter.Desc().String())
+	BazBar.Inc()
+	fmt.Printf("BazBar: %s\n", BazBar.Desc().String())
 
 	BarBing := metrics.BarBing{
 		Bing: "dsasd",
 		Bar:  "jbjb",
 	}
-	BarBingCounter := metrics.BarBingCounter(BarBing)
-	BarBingCounter.Inc()
-	fmt.Printf("foo %v\n", BarBingCounter.Desc().String())
+	BarBing.Inc()
+	fmt.Printf("BarBing: %s\n", BarBing.Desc().String())
 }

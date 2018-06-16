@@ -9,11 +9,11 @@ type FooMetric struct {
 Add it to the MetricTypes struct
 ```go
 type MetricTypes struct {
-	One           BarBazBing
-	Two           Baz
-	Three         BazBar
-	Four          BarBing
-	DoesNotMatter FooMetric
+	BarBazBing BarBazBing
+	Baz        Baz
+	BazBar     BazBar
+	BarBing    BarBing
+	FooMetric  FooMetric
 }
 ```
 
@@ -24,11 +24,17 @@ go generate
 
 creates a new function in metrics/funcs.go
 ```go
-// FooMetricCounter gets a prometheus Counter for metric FooMetric
-func FooMetricCounter(FooMetric FooMetric) prometheus.Counter {
-	return prometheus.
-		NewCounterVec(prometheus.CounterOpts{Name: "FooMetric", Help: ""}, []string{"Tag1", "Tag2"}).
-		WithLabelValues(FooMetric.Tag1, FooMetric.Tag2)
+// Inc calls the prometheus Inc function using BarBazBing for tags
+func (m FooMetric) Inc() {
+	labels := []string{
+		"Tag1",
+		"Tag2",
+	}
+	opts := prometheus.CounterOpts{Name: "FooMetric", Help: ""}
+	prometheus.NewCounterVec(opts, labels).WithLabelValues(
+		m.Tag1,
+		m.Tag2,
+	).Inc()
 }
 ```
 
@@ -38,8 +44,7 @@ m := metrics.FooMetric{
 	Tag1: "tag value",
 	Tag2: "tag value",
 }
-counter := metrics.FooMetricCounter(m)
-counter.Inc()
+m.Inc()
 ```
 
 Run sample:
