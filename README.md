@@ -4,16 +4,17 @@ type Foo struct {
 	Tag1 string
 	Tag2 string
 }
+
+type Bar struct {
+	Tag1 string
+}
 ```
 
 Add it to the MetricTypes struct
 ```go
 type MetricTypes struct {
-	BarBazBing BarBazBing
-	Baz        Baz
-	BazBar     BazBar
-	BarBing    BarBing
-	Foo        Foo `type:"counter" prometheus:"help=help message"`
+	Foo Foo `type:"counter" prometheus:"help=help message"`
+	Bar Bar `type:"gauge" prometheus:"help=help message"`
 }
 ```
 
@@ -59,6 +60,12 @@ foo := metrics.Foo{
 }
 counter := metrics.NewFooCounter(&foo)
 counter.Inc()
+
+bar := metrics.Bar{
+	Tag1: "foo",
+}
+gauge := metrics.NewBarGauge(&bar)
+gauge.Set(55.6)
 ```
 
 Run sample:
