@@ -13,7 +13,7 @@ type MetricTypes struct {
 	Baz        Baz
 	BazBar     BazBar
 	BarBing    BarBing
-	FooMetric  FooMetric
+	FooMetric  FooMetric `prometheus:"help=help message"`
 }
 ```
 

@@ -4,9 +4,9 @@ package metrics
 
 type MetricTypes struct {
 	BarBazBing BarBazBing `prometheus:"help=HELPME"`
-	Baz        Baz        `prometheus:"help=BazHELP"`
-	BazBar     BazBar     `prometheus:"help=BazBarHELP"`
-	BarBing    BarBing    `prometheus:"help=BarBingHELP"`
+	Baz        Baz        `prometheus:"help=Baz HELP"`
+	BazBar     BazBar     `prometheus:"help=BazBar HELP"`
+	BarBing    BarBing    `prometheus:"help=BarBing HELP"`
 }
 
 type BarBazBing struct {

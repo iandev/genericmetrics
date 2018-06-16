@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"os"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/iandev/genericmetrics/metrics"
@@ -59,12 +59,6 @@ type MetricFuncs struct {
 }
 
 func main() {
-	out, err := os.Create("funcs.go")
-	if err != nil {
-		log.Fatalf("Cannot create funcs.go file")
-	}
-	defer out.Close()
-
 	funcs := []MetricFuncs{}
 
 	m := reflect.TypeOf(metrics.MetricTypes{})
@@ -84,10 +78,19 @@ func main() {
 		}
 
 		tag := m.Field(i).Tag.Get("prometheus")
-		fmt.Sscanf(tag, "help=%s", &fun.Help)
+		help := strings.Split(tag, "=")
+		if len(help) > 1 {
+			fun.Help = help[1]
+		}
 
 		funcs = append(funcs, fun)
 	}
+
+	out, err := os.Create("funcs.go")
+	if err != nil {
+		log.Fatalf("Cannot create funcs.go file")
+	}
+	defer out.Close()
 
 	prometheusTemplate.Execute(out, struct {
 		Timestamp time.Time
