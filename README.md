@@ -40,11 +40,11 @@ func (m FooMetric) Inc() {
 
 use the new metric:
 ```go
-FooMetric := metrics.FooMetric{
+foo := metrics.FooMetric{
     Tag1:  "bar",
     Tag2:  "baz",
 }
-counter := metrics.NewFooMetricCounter(&FooMetric)
+counter := metrics.NewFooMetricCounter(&foo)
 counter.Inc()
 ```
 
