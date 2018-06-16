@@ -1,1 +1,38 @@
+Add a new type to metrics/types.go
+```go
+type FooMetric struct {
+	Tag1 string
+	Tag2 string
+}
+```
+
+Add it to the MetricTypes struct
+```go
+type MetricTypes struct {
+	One           BarBazBing
+	Two           Baz
+	Three         BazBar
+	Four          BarBing
+	DoesNotMatter FooMetric
+}
+```
+
+run:
+```bash
+go generate
+```
+
+use the new metric:
+```go
+m := metrics.FooMetric{
+	Tag1: "tag value",
+	Tag2: "tag value",
+}
+counter := metrics.FooMetricCounter(m)
+counter.Inc()
+```
+
+Run sample:
+```bash
 make run
+```
