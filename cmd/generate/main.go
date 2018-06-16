@@ -28,7 +28,7 @@ type {{ .MetricName }}Counter struct {
 	{{ .MetricName }} *{{ .MetricName }}
 	c prometheus.Counter
 }
-// New{{ .MetricName }} returns an instance of a counter
+// New{{ .MetricName }} returns an instance of a {{ .MetricName }}Counter and registers the counter with prometheus
 func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter {
 	labels := []string{
 	{{- range .MetricTags }}
@@ -47,7 +47,7 @@ func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter 
 		c: counter,
 	}
 }
-// Inc calls the prometheus Inc function using {{ .MetricName }} for tags
+// Inc is a wrapper around the prometheus Inc() method
 func (m {{ .MetricName }}Counter) Inc() {
 	m.c.Inc()
 }
