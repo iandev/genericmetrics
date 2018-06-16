@@ -52,22 +52,6 @@ func (m {{ .MetricName }}Counter) Inc() {
 	m.c.Inc()
 }
 {{end}}
-{{if eq .Type "desc"}}
-// Desc returns the prometheus Counter Desc
-func (m {{ .MetricName }}) Desc() *prometheus.Desc {
-	labels := []string{
-	{{- range .MetricTags }}
-		"{{ printf "%s" .}}",
-	{{- end }}
-	}
-	opts := prometheus.CounterOpts{Name: "{{ .MetricName }}", Help: "{{ index .Provider "help" }}"}
-	return prometheus.NewCounterVec(opts, labels).WithLabelValues(
-	{{- range .MetricTags }}
-		m.{{ printf "%s" .}},
-	{{- end }}
-	).Desc()
-}
-{{end}}
 {{- end }}
 `
 
