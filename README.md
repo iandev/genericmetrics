@@ -40,7 +40,12 @@ func (m FooMetric) Inc() {
 
 use the new metric:
 ```go
-metrics.FooMetric{Tag1: "baz", Tag2: "bar"}.Inc()
+FooMetric := metrics.FooMetric{
+    Tag1:  "bar",
+    Tag2:  "baz",
+}
+counter := metrics.NewFooMetricCounter(&FooMetric)
+counter.Inc()
 ```
 
 Run sample:
