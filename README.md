@@ -30,7 +30,7 @@ func (m FooMetric) Inc() {
 		"Tag1",
 		"Tag2",
 	}
-	opts := prometheus.CounterOpts{Name: "FooMetric", Help: ""}
+	opts := prometheus.CounterOpts{Name: "FooMetric", Help: "help message"}
 	prometheus.NewCounterVec(opts, labels).WithLabelValues(
 		m.Tag1,
 		m.Tag2,
