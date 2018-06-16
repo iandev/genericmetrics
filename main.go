@@ -14,14 +14,14 @@ func main() {
 		Baz:  "dsasd",
 		Bing: "dsasd",
 	}
-	BarBazBingCounter := metrics.BarBazBingCounterVec(BarBazBing)
+	BarBazBingCounter := metrics.BarBazBingCounter(BarBazBing)
 	BarBazBingCounter.Inc()
 	fmt.Printf("foo %v\n", BarBazBingCounter.Desc().String())
 
 	Baz := metrics.Baz{
 		Baz: "dsasd",
 	}
-	BazCounter := metrics.BazCounterVec(Baz)
+	BazCounter := metrics.BazCounter(Baz)
 	BazCounter.Inc()
 	fmt.Printf("foo %v\n", BazCounter.Desc().String())
 
@@ -29,7 +29,7 @@ func main() {
 		Baz: "dsasd",
 		Bar: "jbjb",
 	}
-	BazBarCounter := metrics.BazBarCounterVec(BazBar)
+	BazBarCounter := metrics.BazBarCounter(BazBar)
 	BazBarCounter.Inc()
 	fmt.Printf("foo %v\n", BazBarCounter.Desc().String())
 
@@ -37,7 +37,7 @@ func main() {
 		Bing: "dsasd",
 		Bar:  "jbjb",
 	}
-	BarBingCounter := metrics.BarBingCounterVec(BarBing)
+	BarBingCounter := metrics.BarBingCounter(BarBing)
 	BarBingCounter.Inc()
 	fmt.Printf("foo %v\n", BarBingCounter.Desc().String())
 }

@@ -11,8 +11,8 @@ import (
 )
 
 var funcTemplate = `
-// %[1]sCounterVec gets a prometheus Counter for metric %[1]s
-func %[1]sCounterVec(%[1]s %[1]s) prometheus.Counter {
+// %[1]sCounter gets a prometheus Counter for metric %[1]s
+func %[1]sCounter(%[1]s %[1]s) prometheus.Counter {
 	return prometheus.
 		NewCounterVec(prometheus.CounterOpts{Name: "%[1]s", Help: ""}, []string{%[2]s}).
 		WithLabelValues(%[3]s)
