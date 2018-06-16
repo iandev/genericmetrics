@@ -19,7 +19,7 @@ type MetricTypes struct {
 
 run:
 ```bash
-go generate
+go generate ./...
 ```
 
 this generates a new function in metrics/funcs.go
