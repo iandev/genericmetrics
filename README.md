@@ -24,25 +24,38 @@ go generate ./...
 
 this generates a new function in metrics/funcs.go
 ```go
-// Inc calls the prometheus Inc function using FooMetric for tags
-func (m FooMetric) Inc() {
+type FooMetricCounter struct {
+	FooMetric *FooMetric
+	c prometheus.Counter
+}
+// NewFooMetric returns an instance of a FooMetricCounter and registers the counter with prometheus
+func NewFooMetricCounter(m *FooMetric) FooMetricCounter {
 	labels := []string{
 		"Tag1",
 		"Tag2",
 	}
 	opts := prometheus.CounterOpts{Name: "FooMetric", Help: "help message"}
-	prometheus.NewCounterVec(opts, labels).WithLabelValues(
+	counter := prometheus.NewCounterVec(opts, labels).WithLabelValues(
 		m.Tag1,
 		m.Tag2,
-	).Inc()
+	)
+	prometheus.MustRegister(counter)
+	return FooMetricCounter{
+		FooMetric: m,
+		c: counter,
+	}
+}
+// Inc is a wrapper around the prometheus Inc() method
+func (m FooMetricCounter) Inc() {
+	m.c.Inc()
 }
 ```
 
 use the new metric:
 ```go
 foo := metrics.FooMetric{
-    Tag1:  "bar",
-    Tag2:  "baz",
+	Tag1: "bar",
+	Tag2: "baz",
 }
 counter := metrics.NewFooMetricCounter(&foo)
 counter.Inc()
