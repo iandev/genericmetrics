@@ -22,6 +22,16 @@ run:
 go generate
 ```
 
+creates a new function in metrics/funcs.go
+```go
+// FooMetricCounter gets a prometheus Counter for metric FooMetric
+func FooMetricCounter(FooMetric FooMetric) prometheus.Counter {
+	return prometheus.
+		NewCounterVec(prometheus.CounterOpts{Name: "FooMetric", Help: ""}, []string{"Tag1", "Tag2"}).
+		WithLabelValues(FooMetric.Tag1, FooMetric.Tag2)
+}
+```
+
 use the new metric:
 ```go
 m := metrics.FooMetric{
