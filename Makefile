@@ -1,6 +1,7 @@
 clean:
 	rm -f metrics/funcs.go
-run: clean
+build: clean
 	go generate ./...
 	go build .
+run: clean build
 	./genericmetrics
