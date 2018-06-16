@@ -10,14 +10,12 @@ import (
 	"github.com/iandev/genericmetrics/metrics"
 )
 
-var funcTemplate = `
-// %[1]sCounter gets a prometheus Counter for metric %[1]s
+var funcTemplate = `// %[1]sCounter gets a prometheus Counter for metric %[1]s
 func %[1]sCounter(%[1]s %[1]s) prometheus.Counter {
 	return prometheus.
 		NewCounterVec(prometheus.CounterOpts{Name: "%[1]s", Help: ""}, []string{%[2]s}).
 		WithLabelValues(%[3]s)
-}
-`
+}`
 
 func main() {
 	out, err := os.Create("metrics/funcs.go")
@@ -28,7 +26,7 @@ func main() {
 	defer out.Close()
 	out.WriteString("package metrics\n\n")
 	out.WriteString(`import "github.com/prometheus/client_golang/prometheus"`)
-	out.WriteString("\n")
+	out.WriteString("\n\n// Auto generated do not edit\n\n")
 
 	metrics := metrics.MetricTypes{}
 
@@ -50,7 +48,7 @@ func main() {
 
 		fn := fmt.Sprintf(funcTemplate, metricName, strings.Join(labels, ", "), strings.Join(values, ", "))
 		out.WriteString(fn)
-		out.WriteString("\n")
+		out.WriteString("\n\n")
 	}
 
 	out.Sync()
