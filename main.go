@@ -6,7 +6,7 @@ import (
 	"github.com/iandev/genericmetrics/metrics"
 )
 
-//go:generate go run cmd/generate_metric_funcs/main.go
+//go:generate go run cmd/generate/main.go
 
 func main() {
 	BarBazBing := metrics.BarBazBing{
