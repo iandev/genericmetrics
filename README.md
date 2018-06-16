@@ -1,6 +1,6 @@
 Add a new type to metrics/types.go
 ```go
-type FooMetric struct {
+type Foo struct {
 	Tag1 string
 	Tag2 string
 }
@@ -13,7 +13,7 @@ type MetricTypes struct {
 	Baz        Baz
 	BazBar     BazBar
 	BarBing    BarBing
-	FooMetric  FooMetric `methods:"inc" prometheus:"help=help message"`
+	Foo        Foo `type:"counter" prometheus:"help=help message"`
 }
 ```
 
@@ -24,12 +24,12 @@ go generate ./...
 
 this generates new type and functions in metrics/funcs.go
 ```go
-type FooMetricCounter struct {
-	FooMetric *FooMetric
+type FooCounter struct {
+	Foo *Foo
 	c prometheus.Counter
 }
 // NewFooMetric returns an instance of a FooMetricCounter and registers the counter with prometheus
-func NewFooMetricCounter(m *FooMetric) FooMetricCounter {
+func NewFooCounter(m *Foo) FooCounter {
 	labels := []string{
 		"Tag1",
 		"Tag2",
@@ -40,24 +40,24 @@ func NewFooMetricCounter(m *FooMetric) FooMetricCounter {
 		m.Tag2,
 	)
 	prometheus.MustRegister(counter)
-	return FooMetricCounter{
-		FooMetric: m,
+	return FooCounter{
+		Foo: m,
 		c: counter,
 	}
 }
 // Inc is a wrapper around the prometheus Inc() method
-func (m FooMetricCounter) Inc() {
+func (m FooCounter) Inc() {
 	m.c.Inc()
 }
 ```
 
 use the new metric:
 ```go
-foo := metrics.FooMetric{
+foo := metrics.Foo{
 	Tag1: "bar",
 	Tag2: "baz",
 }
-counter := metrics.NewFooMetricCounter(&foo)
+counter := metrics.NewFooCounter(&foo)
 counter.Inc()
 ```
 
