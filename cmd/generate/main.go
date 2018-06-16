@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"os"
@@ -26,7 +27,7 @@ func (m {{ .MetricName }}) Inc() {
 		"{{ printf "%s" .}}",
 	{{- end }}
 	}
-	opts := prometheus.CounterOpts{Name: "{{ .MetricName }}", Help: ""}
+	opts := prometheus.CounterOpts{Name: "{{ .MetricName }}", Help: "{{ .Help }}"}
 	prometheus.NewCounterVec(opts, labels).WithLabelValues(
 	{{- range .Labels }}
 		m.{{ printf "%s" .}},
@@ -41,7 +42,7 @@ func (m {{ .MetricName }}) Desc() *prometheus.Desc {
 		"{{ printf "%s" .}}",
 	{{- end }}
 	}
-	opts := prometheus.CounterOpts{Name: "{{ .MetricName }}", Help: ""}
+	opts := prometheus.CounterOpts{Name: "{{ .MetricName }}", Help: "{{ .Help }}"}
 	return prometheus.NewCounterVec(opts, labels).WithLabelValues(
 	{{- range .Labels }}
 		m.{{ printf "%s" .}},
@@ -54,22 +55,21 @@ func (m {{ .MetricName }}) Desc() *prometheus.Desc {
 type MetricFuncs struct {
 	MetricName string
 	Labels     []string
+	Help       string
 }
 
 func main() {
-	out, err := os.Create("metrics/funcs.go")
+	out, err := os.Create("funcs.go")
 	if err != nil {
 		log.Fatalf("Cannot create funcs.go file")
 	}
 	defer out.Close()
 
 	funcs := []MetricFuncs{}
-	metrics := metrics.MetricTypes{}
 
-	m := reflect.ValueOf(&metrics).Elem()
-
+	m := reflect.TypeOf(metrics.MetricTypes{})
 	for i := 0; i < m.NumField(); i++ {
-		varType := m.Type().Field(i).Type
+		varType := m.Field(i).Type
 		metricName := varType.Name()
 
 		labels := make([]string, varType.NumField())
@@ -82,6 +82,10 @@ func main() {
 			MetricName: metricName,
 			Labels:     labels,
 		}
+
+		tag := m.Field(i).Tag.Get("prometheus")
+		fmt.Sscanf(tag, "help=%s", &fun.Help)
+
 		funcs = append(funcs, fun)
 	}
 

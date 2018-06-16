@@ -1,10 +1,12 @@
 package metrics
 
+//go:generate go run ../cmd/generate/main.go
+
 type MetricTypes struct {
-	BarBazBing BarBazBing
-	Baz        Baz
-	BazBar     BazBar
-	BarBing    BarBing
+	BarBazBing BarBazBing `prometheus:"help=HELPME"`
+	Baz        Baz        `prometheus:"help=BazHELP"`
+	BazBar     BazBar     `prometheus:"help=BazBarHELP"`
+	BarBing    BarBing    `prometheus:"help=BarBingHELP"`
 }
 
 type BarBazBing struct {
