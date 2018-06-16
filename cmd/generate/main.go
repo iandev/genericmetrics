@@ -28,7 +28,7 @@ type {{ .MetricName }}Counter struct {
 	{{ .MetricName }} *{{ .MetricName }}
 	c prometheus.Counter
 }
-// New{{ .MetricName }} returns an instance of a {{ .MetricName }}Counter and registers the counter with prometheus
+// New{{ .MetricName }}Counter returns an instance of a {{ .MetricName }}Counter and registers the counter with prometheus
 func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter {
 	labels := []string{
 	{{- range .MetricTags }}
@@ -48,8 +48,39 @@ func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter 
 	}
 }
 // Inc is a wrapper around the prometheus Inc() method
-func (m {{ .MetricName }}Counter) Inc() {
-	m.c.Inc()
+func (c {{ .MetricName }}Counter) Inc() {
+	c.c.Inc()
+}
+
+{{else if eq .Type "gauge"}}
+type {{ .MetricName }}Gauge struct {
+	{{ .MetricName }} *{{ .MetricName }}
+	g prometheus.Gauge
+}
+
+// New{{ .MetricName }}Gauge returns an instance of a {{ .MetricName }}Gauge and registers the gauge with prometheus
+func New{{ .MetricName }}Gauge(m *{{ .MetricName }}) {{ .MetricName }}Gauge {
+	labels := []string{
+	{{- range .MetricTags }}
+		"{{ printf "%s" .}}",
+	{{- end }}
+	}
+	opts := prometheus.GaugeOpts{Name: "{{ .MetricName }}", Help: "{{ index .Provider "help" }}"}
+	guage := prometheus.NewGaugeVec(opts, labels).WithLabelValues(
+	{{- range .MetricTags }}
+		m.{{ printf "%s" .}},
+	{{- end }}
+	)
+	prometheus.MustRegister(guage)
+	return {{ .MetricName }}Gauge{
+		{{ .MetricName }}: m,
+		g: guage,
+	}
+}
+
+// Set is a wrapper around the prometheus Set(float64) method
+func (g {{ .MetricName }}Gauge) Set(s float64) {
+	g.g.Set(s)
 }
 {{end}}
 {{- end }}

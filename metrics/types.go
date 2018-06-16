@@ -4,7 +4,7 @@ package metrics
 
 type MetricTypes struct {
 	BarBazBing BarBazBing `type:"counter" prometheus:"help=HELPME, foo=bar"`
-	Baz        Baz        `type:"counter" prometheus:"help=Baz HELP"`
+	Baz        Baz        `type:"gauge" prometheus:"help=Baz HELP"`
 	BazBar     BazBar     `type:"counter" prometheus:"help=BazBar HELP"`
 	BarBing    BarBing    `type:"counter" prometheus:"help=BarBing HELP"`
 }

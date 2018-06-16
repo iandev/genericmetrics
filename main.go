@@ -5,11 +5,17 @@ import (
 )
 
 func main() {
-	BarBazBing := metrics.BarBazBing{
+	barBazBing := metrics.BarBazBing{
 		Bar:  "assd",
 		Baz:  "dsasd",
 		Bing: "dsasd",
 	}
-	counter := metrics.NewBarBazBingCounter(&BarBazBing)
+	counter := metrics.NewBarBazBingCounter(&barBazBing)
 	counter.Inc()
+
+	baz := metrics.Baz{
+		Baz: "foobar",
+	}
+	gauge := metrics.NewBazGauge(&baz)
+	gauge.Set(55.6)
 }
