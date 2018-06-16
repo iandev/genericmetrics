@@ -22,7 +22,7 @@ run:
 go generate ./...
 ```
 
-this generates a new function in metrics/funcs.go
+this generates new type and functions in metrics/funcs.go
 ```go
 type FooMetricCounter struct {
 	FooMetric *FooMetric
