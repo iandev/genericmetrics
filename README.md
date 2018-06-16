@@ -19,7 +19,7 @@ type MetricTypes struct {
 
 run:
 ```bash
-go generate
+go generate ./...
 ```
 
 this generates a new function in metrics/funcs.go
@@ -40,11 +40,7 @@ func (m FooMetric) Inc() {
 
 use the new metric:
 ```go
-m := metrics.FooMetric{
-	Tag1: "tag value",
-	Tag2: "tag value",
-}
-m.Inc()
+metrics.FooMetric{Tag1: "baz", Tag2: "bar"}.Inc()
 ```
 
 Run sample:
