@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/bounceexchange/genericmetrics/metrics"
+	"github.com/iandev/genericmetrics/metrics"
 )
 
 //go:generate go run cmd/generate_metric_funcs/main.go

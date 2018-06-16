@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/bounceexchange/genericmetrics/metrics"
+	"github.com/iandev/genericmetrics/metrics"
 )
 
 var funcTemplate = `
