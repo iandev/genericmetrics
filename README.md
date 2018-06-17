@@ -35,7 +35,7 @@ func NewFooCounter(m *Foo) FooCounter {
 		"Tag1",
 		"Tag2",
 	}
-	opts := prometheus.CounterOpts{Name: "FooMetric", Help: "help message"}
+	opts := prometheus.CounterOpts{Name: "Foo", Help: "help message"}
 	counter := prometheus.NewCounterVec(opts, labels).WithLabelValues(
 		m.Tag1,
 		m.Tag2,
