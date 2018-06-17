@@ -51,8 +51,13 @@ func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter 
 func (c {{ .MetricName }}Counter) Inc() {
 	c.c.Inc()
 }
+// Add is a wrapper around the prometheus Add(float64) method
+func (c {{ .MetricName }}Counter) Add(a float64) {
+	c.c.Add(a)
+}
 
 {{else if eq .Type "gauge"}}
+
 type {{ .MetricName }}Gauge struct {
 	{{ .MetricName }} *{{ .MetricName }}
 	g prometheus.Gauge
