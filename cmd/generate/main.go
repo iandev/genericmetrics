@@ -29,7 +29,7 @@ type {{ .MetricName }}Counter struct {
 	c prometheus.Counter
 }
 // New{{ .MetricName }}Counter returns an instance of a {{ .MetricName }}Counter and registers the counter with prometheus
-func New{{ .MetricName }}Counter(m *{{ .MetricName }}) {{ .MetricName }}Counter {
+func New{{ .MetricName }}Counter(m *{{ .MetricName }}) Counter {
 	labels := []string{
 	{{- range .MetricTags }}
 		"{{ printf "%s" .}}",
@@ -64,7 +64,7 @@ type {{ .MetricName }}Gauge struct {
 }
 
 // New{{ .MetricName }}Gauge returns an instance of a {{ .MetricName }}Gauge and registers the gauge with prometheus
-func New{{ .MetricName }}Gauge(m *{{ .MetricName }}) {{ .MetricName }}Gauge {
+func New{{ .MetricName }}Gauge(m *{{ .MetricName }}) Gauge {
 	labels := []string{
 	{{- range .MetricTags }}
 		"{{ printf "%s" .}}",

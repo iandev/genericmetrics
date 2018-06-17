@@ -9,6 +9,15 @@ type MetricTypes struct {
 	BarBing    BarBing    `type:"counter" prometheus:"help=BarBing HELP"`
 }
 
+type Counter interface {
+	Inc()
+	Add(float64)
+}
+
+type Gauge interface {
+	Set(float64)
+}
+
 type BarBazBing struct {
 	Bar  string
 	Baz  string
