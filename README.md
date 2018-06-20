@@ -1,3 +1,5 @@
+A dead simple metrics wrapper.
+
 Add a new type to metrics/types.go
 ```go
 type Foo struct {
