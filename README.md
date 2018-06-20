@@ -22,12 +22,12 @@ type MetricTypes struct {
 }
 ```
 
-run:
+Run
 ```bash
 go generate ./...
 ```
 
-this generates new type and functions in metrics/funcs.go
+This generates new type and functions in metrics/funcs.go
 ```go
 type FooCounter struct {
 	Foo *Foo
@@ -84,7 +84,7 @@ func (g BarGauge) Set(s float64) {
 }
 ```
 
-use the new metric:
+Use the new metric
 ```go
 foo := metrics.Foo{
 	Tag1: "bar",
@@ -101,7 +101,7 @@ gauge := metrics.NewBarGauge(&bar)
 gauge.Set(55.6)
 ```
 
-Run sample:
+Run sample
 ```bash
 make run
 ```
