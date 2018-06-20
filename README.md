@@ -50,6 +50,10 @@ func NewFooCounter(m *Foo) FooCounter {
 func (m FooCounter) Inc() {
 	m.c.Inc()
 }
+// Add is a wrapper around the prometheus Add(float64) method
+func (m FooCounter) Add(a float64) {
+	m.c.Add(a)
+}
 
 type BarGauge struct {
 	Bar *Bar
@@ -84,6 +88,7 @@ foo := metrics.Foo{
 }
 counter := metrics.NewFooCounter(&foo)
 counter.Inc()
+counter.Add(3)
 
 bar := metrics.Bar{
 	Tag1: "foo",
