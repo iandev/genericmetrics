@@ -29,7 +29,7 @@ type FooCounter struct {
 	Foo *Foo
 	c prometheus.Counter
 }
-// NewFooMetric returns an instance of a FooMetricCounter and registers the counter with prometheus
+// NewFooCounter returns an instance of a FooCounter and registers the counter with prometheus
 func NewFooCounter(m *Foo) FooCounter {
 	labels := []string{
 		"Tag1",
@@ -49,6 +49,30 @@ func NewFooCounter(m *Foo) FooCounter {
 // Inc is a wrapper around the prometheus Inc() method
 func (m FooCounter) Inc() {
 	m.c.Inc()
+}
+
+type BarGauge struct {
+	Bar *Bar
+	g prometheus.Gauge
+}
+// NewBarGauge returns an instance of a BarGauge and registers the gauge with prometheus
+func NewBarGauge(m *Bar) Gauge {
+	labels := []string{
+		"Tag1",
+	}
+	opts := prometheus.GaugeOpts{Name: "Bar", Help: "Bar HELP"}
+	guage := prometheus.NewGaugeVec(opts, labels).WithLabelValues(
+		m.Tag1,
+	)
+	prometheus.MustRegister(guage)
+	return BarGauge{
+		Bar: m,
+		g: guage,
+	}
+}
+// Set is a wrapper around the prometheus Set(float64) method
+func (g BarGauge) Set(s float64) {
+	g.g.Set(s)
 }
 ```
 
