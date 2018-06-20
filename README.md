@@ -84,7 +84,7 @@ func (g BarGauge) Set(s float64) {
 }
 ```
 
-Use the new metric
+Use the new metrics
 ```go
 foo := metrics.Foo{
 	Tag1: "bar",
