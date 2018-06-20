@@ -1,4 +1,6 @@
-### Dead simple metrics wrapper. ###
+### _Dead simple metrics wrapper._ ###
+
+
 
 Add a new type to metrics/types.go
 ```go
